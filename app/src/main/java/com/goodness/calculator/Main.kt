@@ -3,14 +3,14 @@ package com.goodness.calculator
 
 fun main() {
   println("첫번째 숫자를 입력하세요.")
-  var initNum = readln().toDoubleOrNull() ?: throw Error("숫자가 아닌 값을 입력하였습니다.")
+  var initNum: Double = getDouble()
 
   while (true) {
     println("다음 숫자를 입력하세요.")
-    val num2 = readln().toDoubleOrNull() ?: throw Error("숫자가 아닌 값을 입력하였습니다.")
+    val num2: Double = getDouble()
 
     println("수행할 연산을 입력하세요. add, sub, mul, div")
-    val operator = readln()
+    val operator = getOperator()
 
     val result = when (operator) {
       "add" -> AddOperator().operate(initNum, num2)
@@ -22,5 +22,25 @@ fun main() {
 
     initNum = result
     println("result: $result")
+  }
+}
+
+fun getDouble(): Double {
+  while (true) {
+    val input = readln().toDoubleOrNull()
+    if (input is Double) {
+      return input
+    } else {
+      println("올바른 숫자를 입력해주세요")
+    }
+  }
+}
+
+fun getOperator(): String {
+  while (true) {
+    when (val input = readln()) {
+      "add", "sub", "mul", "div" -> return input
+      else -> println("올바른 연산자를 입력해주세요")
+    }
   }
 }
