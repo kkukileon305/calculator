@@ -2,6 +2,8 @@ package com.goodness.calculator
 
 
 fun main() {
+  val addCal = Calculator(AddOperator())
+
   println("첫번째 숫자를 입력하세요.")
   var initNum: Double = getDouble()
 
@@ -12,14 +14,20 @@ fun main() {
     println("수행할 연산을 입력하세요. add, sub, mul, div")
     val operator = getOperator()
 
-    val result = when (operator) {
-      "add" -> AddOperator().operate(initNum, num2)
-      "sub" -> SubOperator().operate(initNum, num2)
-      "mul" -> MulOperator().operate(initNum, num2)
-      "div" -> DivOperator().operate(initNum, num2)
-      else -> throw Error("잘못된 연산자입니다.")
-    }
+    var result = initNum
 
+    if (!(num2 == 0.0 && operator == "div")) {
+      result = when (operator) {
+        "add" -> Calculator(AddOperator()).operate(initNum, num2)
+        "sub" -> Calculator(SubOperator()).operate(initNum, num2)
+        "mul" -> Calculator(MulOperator()).operate(initNum, num2)
+        "div" -> Calculator(DivOperator()).operate(initNum, num2)
+        else -> throw Error("잘못된 연산자입니다.")
+      }
+    } else {
+      println("0으로 나눌 수 없습니다.")
+    }
+    
     initNum = result
     println("result: $result")
   }
